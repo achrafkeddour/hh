@@ -1,0 +1,58 @@
+class SimulateurVol:
+    def __init__(self):
+        self.altitude = 0  # en mètres
+        self.vitesse = 0   # en km/h
+        self.carburant = 100  # en pourcentage
+
+    def afficher_etat(self):
+        print(f"Altitude: {self.altitude} mètres")
+        print(f"Vitesse: {self.vitesse} km/h")
+        print(f"Carburant: {self.carburant}%")
+
+    def changer_vitesse(self, changement):
+        self.vitesse += changement
+        if self.vitesse < 0:
+            self.vitesse = 0
+        print(f"Nouvelle vitesse: {self.vitesse} km/h")
+
+    def changer_altitude(self, changement):
+        self.altitude += changement
+        if self.altitude < 0:
+            self.altitude = 0
+        print(f"Nouvelle altitude: {self.altitude} mètres")
+
+    def consommer_carburant(self):
+        consommation = self.vitesse * 0.01
+        self.carburant -= consommation
+        if self.carburant < 0:
+            self.carburant = 0
+        print(f"Carburant restant: {self.carburant}%")
+
+def main():
+    simulateur = SimulateurVol()
+    simulateur.afficher_etat()
+
+    while simulateur.carburant > 0:
+        action = input("Entrez une commande (vitesse, altitude, état, quitter): ").strip().lower()
+        
+        if action == "vitesse":
+            changement = float(input("Entrez le changement de vitesse (km/h): "))
+            simulateur.changer_vitesse(changement)
+        elif action == "altitude":
+            changement = float(input("Entrez le changement d'altitude (mètres): "))
+            simulateur.changer_altitude(changement)
+        elif action == "état" or action == "etat":
+            simulateur.afficher_etat()
+        elif action == "quitter":
+            break
+        else:
+            print("Commande non reconnue. Veuillez essayer à nouveau.")
+
+        simulateur.consommer_carburant()
+        simulateur.afficher_etat()
+        print("---")
+
+    print("Simulation terminée. pas de carburant encore.")
+
+if __name__ == "__main__":
+    main()
